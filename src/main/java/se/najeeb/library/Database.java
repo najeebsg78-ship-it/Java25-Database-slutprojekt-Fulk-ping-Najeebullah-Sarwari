@@ -10,7 +10,7 @@ public class Database {
 
     private Database(){};
 
-    private static Connection getConnection (){
+    static Connection getConnection(){
 
         if (db != null) return db;
 
