@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class bookDAO {
-    public List<Book> searchByNameOrTitle (String search) {
+    public static List<Book> searchByNameOrTitle (String search) {
       List<Book> bookList = new ArrayList<>();
 
       Connection db = Database.getConnection();
 
-      String sql = "SELECT * FROM Books WHERE title LIKE = ? OR author LIKE = ?";
+      String sql = "SELECT * FROM Books WHERE title LIKE ? OR author LIKE ?";
 
       try(PreparedStatement pstmt = db.prepareStatement(sql)) {
 

@@ -1,11 +1,14 @@
 package se.najeeb.library;
 
+import se.najeeb.library.DAO.bookDAO;
 import se.najeeb.library.DAO.loanDAO;
 import se.najeeb.library.DAO.userDAO;
+import se.najeeb.library.Modell.Book;
 import se.najeeb.library.Modell.User;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -21,9 +24,11 @@ public class Main {
             System.out.println("""
                     1. Ny Användare
                     2. Logga In
-                    3. Låna Bok 
+                    3. Låna Bok
                     4. Lämna Bok
-                    5. Avsluta program
+                    5. Söka
+                    6. Se dina lån
+                    7. Avsluta program
                     Välj: """);
 
             try {
@@ -86,6 +91,31 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Sök efter titel eller författare: ");
+                    sc.nextLine();
+                    String keyword = sc.nextLine();
+
+                    List<Book> results = bookDAO.searchByNameOrTitle(keyword);
+
+                    if (results.isEmpty()) {
+                        System.out.println("Tyvärr hittade ingen som matchade: " + keyword);
+                    } else {
+                        System.out.println("Sökresultat: ");
+                        for (Book b : results) {
+                            System.out.println(b.toString());
+                        }
+                    }
+
+                case 6:
+                    System.out.println("Ange UserId för att se dina lån: ");
+                    int inputId = sc.nextInt();
+                    sc.nextLine();
+
+                    loanDAO.showAllLoans(inputId);
+                    break;
+
+
+                case 7:
                 System.out.println("Avsluta program");
                 running = false;
                 break;
